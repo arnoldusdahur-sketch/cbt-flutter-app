@@ -90,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: const Text('Sunting Profil', style: TextStyle(fontWeight: FontWeight.w850, fontSize: 18)),
+        title: const Text('Sunting Profil', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
         centerTitle: true,
         elevation: 0,
       ),
