@@ -587,8 +587,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _buildMenuItem(context, 'SKB Dosen', Icons.school, Colors.teal, () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => const TryoutListScreen(initialCategory: 'skb_dosen')));
         }, isDark),
-        _buildMenuItem(context, 'E-Book', Icons.menu_book, Colors.blue, () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const EbooksScreen()));
+        _buildMenuItem(context, 'Live Class', Icons.video_camera_front, Colors.red, () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const NativeLiveClassScreen()));
         }, isDark),
         _buildMenuItem(context, 'Kisi-Kisi', Icons.assignment_outlined, Colors.orange, () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => const KisiKisiScreen()));
@@ -619,14 +619,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisSpacing: 8,
           childAspectRatio: 0.85,
           children: [
-            _buildMenuItem(context, 'Materi', Icons.info_outline, Colors.indigo, () {
+            _buildMenuItem(context, 'Materi', Icons.menu_book, Colors.blue, () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const WebViewTabScreen(
-                    initialUrl: '${AppConfig.baseUrl}/informations',
-                    title: 'Materi Belajar',
-                  ),
+                  builder: (_) => const EbooksScreen(),
                 ),
               );
             }, isDark),
