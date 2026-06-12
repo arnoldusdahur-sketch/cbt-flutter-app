@@ -21,5 +21,10 @@ workflows:
     artifacts:
       - build/ios/iphonesimulator/Runner.zip
     publishing:
-      appetize:
-        token: tok_wzmvs2gv5gp557fwnrpp6kv644
+      scripts:
+        - name: Upload to Appetize
+          script: |
+            curl --location --request POST "https://api.appetize.io/v1/apps" \
+              -H "X-API-KEY: tok_wzmvs2gv5gp557fwnrpp6kv644" \
+              --form "file=@build/ios/iphonesimulator/Runner.zip" \
+              --form "platform=ios"
