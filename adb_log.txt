@@ -1,0 +1,16 @@
+06-10 19:24:39.640 34436 21680 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:25:21.190 34436 29644 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:33:50.446 34436 18768 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:33:50.456 34436 27212 E adb.exe : transport_usb.cpp:136 remote usb: 1 - write terminated: Input/output error
+06-10 19:34:16.718 34436 30228 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:34:30.319 34436 23156 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:45:21.774 34436  9708 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:45:21.804 34436 35080 E adb.exe : transport_usb.cpp:136 remote usb: 1 - write terminated: Input/output error
+06-10 19:55:13.444 34436 37000 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:55:21.825 34436 34064 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 19:59:12.522 34436 33496 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 21:25:40.436 34436 36044 W adb.exe : sockets.cpp:310 timeout expired while flushing socket, closing
+06-10 21:25:49.297 34436 32912 I adb.exe : transport.cpp:1170 NR9XCQRO5DNNSODI: connection terminated: read failed
+06-10 21:25:49.322 34436 36412 E adb.exe : transport_usb.cpp:136 remote usb: 1 - write terminated: Input/output error
+06-10 21:26:00.248 34436 36044 W adb.exe : sockets.cpp:310 timeout expired while flushing socket, closing
+adb server killed by remote request

@@ -1,0 +1,70 @@
+name: Build & Deploy iOS IPA
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    name: Build iOS App
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java (required for Gradle/Flutter setup)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.19.0' # Matches Flutter SDK version
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build iOS App (Unsigned)
+        run: flutter build ios --release --no-codesign
+
+      - name: Create Unsigned IPA Package
+        run: |
+          mkdir -p Payload
+          mv build/ios/iphoneos/Runner.app Payload/
+          zip -r otwasn.ipa Payload
+          echo "IPA packaging completed successfully."
+
+      - name: Upload IPA Artifact to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: otwasn-ios-ipa
+          path: otwasn.ipa
+
+      - name: Deploy to FTP (Optional Automation)
+        if: "${{ secrets.FTP_HOST != '' && secrets.FTP_USER != '' && secrets.FTP_PASS != '' }}"
+        run: |
+          echo "Starting FTP deployment..."
+          python -c "
+          import ftplib
+          import os
+          try:
+              ftp = ftplib.FTP()
+              ftp.connect('${{ secrets.FTP_HOST }}', 21, timeout=60)
+              ftp.login('${{ secrets.FTP_USER }}', '${{ secrets.FTP_PASS }}')
+              ftp.set_pasv(True)
+              print('Connected to FTP server successfully.')
+              with open('otwasn.ipa', 'rb') as f:
+                  ftp.storbinary('STOR public_html/downloads/otwasn.ipa', f)
+              ftp.quit()
+              print('Successfully uploaded otwasn.ipa to hosting downloads folder.')
+          except Exception as e:
+              print(f'Error uploading to FTP: {e}')
+              exit(1)
+          "
