@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 import '../config/app_config.dart';
-import 'webview_tab_screen.dart';
 
 class EbooksScreen extends StatefulWidget {
   const EbooksScreen({super.key});
@@ -68,6 +68,24 @@ class _EbooksScreenState extends State<EbooksScreen> with SingleTickerProviderSt
         _isLoading = false;
         _errorMessage = 'Gagal memuat e-book. Periksa koneksi internet Anda.';
       });
+    }
+  }
+
+  Future<void> _openEbook(String urlString) async {
+    if (urlString.isEmpty) return;
+    try {
+      final url = Uri.parse(urlString.trim());
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        throw Exception('Tidak dapat membuka tautan.');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal membuka e-book: $urlString')),
+        );
+      }
     }
   }
 
@@ -297,17 +315,7 @@ class _EbooksScreenState extends State<EbooksScreen> with SingleTickerProviderSt
                   width: double.infinity,
                   height: 30,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => WebViewTabScreen(
-                            initialUrl: readUrl,
-                            title: 'Membaca E-Book',
-                          ),
-                        ),
-                      );
-                    },
+                    onPressed: () => _openEbook(readUrl),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       foregroundColor: Colors.white,

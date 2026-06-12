@@ -269,6 +269,63 @@ class AuthService {
     }
   }
 
+  /// Fetch Informations data from API
+  static Future<Map<String, dynamic>?> fetchInformations() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cookie = prefs.getString(_cookieKey) ?? '';
+
+      final resp = await http.get(
+        Uri.parse('${AppConfig.baseUrl}/api/mobile/informations'),
+        headers: {
+          'User-Agent': _userAgent(),
+          'Cookie': cookie,
+          'Accept': 'application/json',
+        },
+      );
+
+      if (resp.statusCode == 200) {
+        return jsonDecode(resp.body) as Map<String, dynamic>;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Update User Profile via API
+  static Future<Map<String, dynamic>?> updateProfile(String name, String email) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cookie = prefs.getString(_cookieKey) ?? '';
+
+      final resp = await http.post(
+        Uri.parse('${AppConfig.baseUrl}/api/mobile/profile/update'),
+        headers: {
+          'User-Agent': _userAgent(),
+          'Cookie': cookie,
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+          'name': name,
+          'email': email,
+        },
+      );
+
+      if (resp.statusCode == 200) {
+        final data = jsonDecode(resp.body) as Map<String, dynamic>;
+        if (data['success'] == true && data.containsKey('user')) {
+          await prefs.setString(_userKey, jsonEncode(data['user']));
+        }
+        return data;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// Check if user is logged in (has valid session)
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();

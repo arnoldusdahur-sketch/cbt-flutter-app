@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 import '../config/app_config.dart';
-import 'webview_tab_screen.dart';
 import 'tryout_list_screen.dart';
 import 'ebooks_screen.dart';
 import 'capaian_screen.dart';
@@ -12,6 +12,8 @@ import 'upgrade_screen.dart';
 import 'native_exam_screen.dart';
 import 'native_live_class_screen.dart';
 import 'native_result_screen.dart';
+import 'information_screen.dart';
+import 'edit_profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final void Function(int) onTabRequest; // Callback to request tab switch in MainShell if needed
@@ -56,6 +58,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _startBannerTimer();
       }
     });
+  }
+
+  Future<void> _launchURL(String urlString) async {
+    if (urlString.isEmpty) return;
+    try {
+      final url = Uri.parse(urlString.trim());
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        throw Exception('Tidak dapat membuka tautan.');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal membuka tautan: $urlString')),
+        );
+      }
+    }
   }
 
   @override
@@ -367,17 +387,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           // Help Center Button
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const WebViewTabScreen(
-                    initialUrl: AppConfig.whatsappSupport,
-                    title: 'Pusat Bantuan',
-                  ),
-                ),
-              );
-            },
+            onPressed: () => _launchURL(AppConfig.whatsappSupport),
             icon: const Icon(
               Icons.headset_mic_rounded,
               color: Colors.white,
@@ -623,10 +633,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const WebViewTabScreen(
-                    initialUrl: '${AppConfig.baseUrl}/informations',
-                    title: 'Informasi',
-                  ),
+                  builder: (_) => const InformationScreen(),
                 ),
               );
             }, isDark),
@@ -711,10 +718,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => const WebViewTabScreen(
-                initialUrl: '${AppConfig.baseUrl}/upgrade',
-                title: 'Upgrade Pro',
-              ),
+              builder: (_) => const UpgradeScreen(),
             ),
           );
         },
@@ -1057,7 +1061,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => WebViewTabScreen(initialUrl: actionUrl, title: title),
+                            builder: (_) => const UpgradeScreen(),
                           ),
                         ).then((_) => _loadDashboardData());
                       }

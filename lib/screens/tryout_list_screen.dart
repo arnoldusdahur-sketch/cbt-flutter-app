@@ -4,6 +4,7 @@ import '../config/app_config.dart';
 import 'webview_tab_screen.dart';
 import 'native_exam_screen.dart';
 import 'native_result_screen.dart';
+import 'upgrade_screen.dart';
 
 class TryoutListScreen extends StatefulWidget {
   final String initialCategory; // 'skd' or 'skb_dosen'
@@ -279,7 +280,7 @@ class _TryoutListScreenState extends State<TryoutListScreen> with SingleTickerPr
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => WebViewTabScreen(initialUrl: actionUrl, title: title),
+                            builder: (_) => const UpgradeScreen(),
                           ),
                         ).then((_) => _loadExams());
                       }

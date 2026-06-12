@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../config/app_config.dart';
-import 'webview_tab_screen.dart';
+import 'native_result_screen.dart';
 
 class CapaianScreen extends StatefulWidget {
   const CapaianScreen({super.key});
@@ -299,7 +299,7 @@ class _CapaianScreenState extends State<CapaianScreen> {
         final tkp = session['tkp_score'] ?? 0;
         final isPassed = session['is_passed'] == true;
         final dateStr = _formatDate(session['end_time']);
-        final resultUrl = session['result_url'];
+        final examId = session['exam_id'];
 
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
@@ -368,16 +368,16 @@ class _CapaianScreenState extends State<CapaianScreen> {
                           ),
                         ],
                       ),
-                      if (resultUrl != null) ...[
+                      if (examId != null) ...[
                         const SizedBox(width: 12),
                         IconButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => WebViewTabScreen(
-                                  initialUrl: resultUrl,
-                                  title: 'Detail Pembahasan',
+                                builder: (_) => NativeResultScreen(
+                                  examId: examId,
+                                  examTitle: title,
                                 ),
                               ),
                             );

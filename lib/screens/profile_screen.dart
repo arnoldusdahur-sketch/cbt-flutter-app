@@ -8,6 +8,7 @@ import '../services/theme_service.dart';
 import 'settings_screen.dart';
 import 'login_screen.dart';
 import 'webview_tab_screen.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final ThemeService themeService;
@@ -281,12 +282,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const WebViewTabScreen(
-                                initialUrl: '${AppConfig.baseUrl}/profile',
-                                title: 'Edit Profil',
-                              ),
+                              builder: (_) => const EditProfileScreen(),
                             ),
-                          );
+                          ).then((updated) {
+                            if (updated == true) {
+                              _loadUserData();
+                            }
+                          });
                         },
                         iosTextColor: iosTextColor,
                         borderColor: iosBorderColor,
@@ -557,12 +559,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const WebViewTabScreen(
-                                  initialUrl: '${AppConfig.baseUrl}/profile',
-                                  title: 'Edit Profil',
-                                ),
+                                builder: (_) => const EditProfileScreen(),
                               ),
-                            );
+                            ).then((updated) {
+                              if (updated == true) {
+                                _loadUserData();
+                              }
+                            });
                           },
                           textColor: textColor,
                           subColor: subColor,
