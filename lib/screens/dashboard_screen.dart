@@ -619,11 +619,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisSpacing: 8,
           childAspectRatio: 0.85,
           children: [
-            _buildMenuItem(context, 'Materi', Icons.menu_book, Colors.blue, () {
+            _buildMenuItem(context, 'Informasi', Icons.info_outline, Colors.indigo, () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const EbooksScreen(),
+                  builder: (_) => const WebViewTabScreen(
+                    initialUrl: '${AppConfig.baseUrl}/informations',
+                    title: 'Informasi',
+                  ),
                 ),
               );
             }, isDark),
