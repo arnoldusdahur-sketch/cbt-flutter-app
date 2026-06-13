@@ -294,10 +294,24 @@ class AuthService {
   }
 
   /// Update User Profile via API
-  static Future<Map<String, dynamic>?> updateProfile(String name, String email) async {
+  static Future<Map<String, dynamic>?> updateProfile(
+    String name,
+    String email, {
+    String? phone,
+    String? address,
+    String? password,
+  }) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final cookie = prefs.getString(_cookieKey) ?? '';
+
+      final body = {
+        'name': name,
+        'email': email,
+      };
+      if (phone != null) body['phone'] = phone;
+      if (address != null) body['address'] = address;
+      if (password != null && password.isNotEmpty) body['password'] = password;
 
       final resp = await http.post(
         Uri.parse('${AppConfig.baseUrl}/api/mobile/profile/update'),
@@ -307,10 +321,7 @@ class AuthService {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: {
-          'name': name,
-          'email': email,
-        },
+        body: body,
       );
 
       if (resp.statusCode == 200) {

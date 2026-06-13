@@ -597,8 +597,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _buildMenuItem(context, 'SKB Dosen', Icons.school, Colors.teal, () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => const TryoutListScreen(initialCategory: 'skb_dosen')));
         }, isDark),
-        _buildMenuItem(context, 'Live Class', Icons.video_camera_front, Colors.red, () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const NativeLiveClassScreen()));
+        _buildMenuItem(context, 'Materi', Icons.menu_book_rounded, Colors.red, () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const EbooksScreen()));
         }, isDark),
         _buildMenuItem(context, 'Kisi-Kisi', Icons.assignment_outlined, Colors.orange, () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => const KisiKisiScreen()));
@@ -640,7 +640,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _buildMenuItem(context, 'Rapor Hasil', Icons.leaderboard, Colors.purple, () {
               Navigator.push(context, MaterialPageRoute(builder: (_) => const CapaianScreen()));
             }, isDark),
-            _buildMenuItem(context, 'Live Class', Icons.video_camera_front, Colors.red, () {
+            _buildMenuItem(context, 'Paket Belajar', Icons.assignment_ind_rounded, Colors.orange, () {
               Navigator.push(
                 context,
                 MaterialPageRoute(

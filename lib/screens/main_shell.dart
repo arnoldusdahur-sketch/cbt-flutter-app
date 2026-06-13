@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/theme_service.dart';
 import '../config/app_config.dart';
 import 'dashboard_screen.dart';
-import 'webview_tab_screen.dart';
+import 'native_live_class_screen.dart';
 import 'profile_screen.dart';
 import 'ebooks_screen.dart';
 import 'capaian_screen.dart';
@@ -90,7 +90,7 @@ class _MainShellState extends State<MainShell> {
 
     final screens = [
       DashboardScreen(onTabRequest: _onTabTapped),
-      const EbooksScreen(),
+      const NativeLiveClassScreen(),
       const CapaianScreen(),
       ProfileScreen(
         themeService: _themeService!,
@@ -175,7 +175,7 @@ class _MainShellState extends State<MainShell> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildTabItem(0, Icons.home_rounded, 'Beranda', isDark, primaryColor),
-              _buildTabItem(1, Icons.menu_book_rounded, 'Materi', isDark, primaryColor),
+              _buildTabItem(1, Icons.video_camera_front_rounded, 'Live Class', isDark, primaryColor),
               const SizedBox(width: 48), // Space for floating action button
               _buildTabItem(2, Icons.leaderboard_rounded, 'Rapor', isDark, primaryColor),
               _buildTabItem(3, Icons.person_rounded, 'Profil', isDark, primaryColor),
